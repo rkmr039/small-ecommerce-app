@@ -185,7 +185,7 @@ $(function(){
 
     // ***************************  AJAX **********************
 
-    var xhttp = new XMLHttpRequest();
+/*     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
         console.log(this.readyState);
@@ -203,8 +203,30 @@ $(function(){
         // console.log(this.responseText);
     }
 
-    xhttp.open("GET", 'https://opentdb.com/api.php?amount=2')
+    xhttp.open("GET", 'https://opentdb.com/api.php?amount=1')
 
-    xhttp.send()
+    xhttp.send() */
+
+    // *********************** AJAX with JQuery ********************
+
+    $.ajax({
+        url: 'https://opentdb.com/api.php?amount=1',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            presentQuestion(response);
+        },
+        error: function() {
+            console.log('Error occured');
+        }
+    });
+
+    function presentQuestion(responseObject) {
+        var question = responseObject.results[0].question;
+        console.log('Question:: ' + question)
+        var answers = responseObject.results[0].incorrect_answers;
+        answers.push(responseObject.results[0].correct_answer)
+        console.log('Answers:: ', answers)
+    }
 
  });
