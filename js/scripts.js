@@ -212,13 +212,11 @@ $(function(){
     $.ajax({
         url: 'https://opentdb.com/api.php?amount=1',
         type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            presentQuestion(response);
-        },
-        error: function() {
-            console.log('Error occured');
-        }
+        dataType: 'json'
+    }).done(function(response) {
+        presentQuestion(response);
+    }).fail(function() {
+        console.log('Error occured');
     });
 
     function presentQuestion(responseObject) {
