@@ -209,7 +209,7 @@ $(function(){
 
     // *********************** AJAX with JQuery ********************
 
-    $.ajax({
+/*     $.ajax({
         url: 'https://opentdb.com/api.php?amount=1',
         type: 'GET',
         dataType: 'json'
@@ -225,6 +225,26 @@ $(function(){
         var answers = responseObject.results[0].incorrect_answers;
         answers.push(responseObject.results[0].correct_answer)
         console.log('Answers:: ', answers)
+    } */
+
+    $.ajax({
+        url: 'https://restcountries.eu/rest/v2/all',
+        method: 'GET',
+        dataType: 'json'
+    }).done(function(response) {
+        populateCountriesList(response)
+    }).fail(function() {
+        console.log('Request failed')
+    });
+
+    function populateCountriesList(countryList) {
+        // console.log(countryList)
+        countryList.forEach(country => {
+            // console.log(country)
+            var newCountry = document.createElement('option')
+            newCountry.innerHTML = country.name;
+            document.getElementById('coutryDropDown').appendChild(newCountry);
+        });
     }
 
  });
