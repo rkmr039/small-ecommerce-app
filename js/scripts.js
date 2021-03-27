@@ -233,18 +233,28 @@ $(function(){
         dataType: 'json'
     }).done(function(response) {
         populateCountriesList(response)
+        if(localStorage.selectedCountry) {
+            document.getElementById('coutryDropDown').selectedIndex = localStorage.selectedCountryIndex;
+        }
     }).fail(function() {
         console.log('Request failed')
     });
 
     function populateCountriesList(countryList) {
-        // console.log(countryList)
+        // console.log(countryList);
         countryList.forEach(country => {
-            // console.log(country)
             var newCountry = document.createElement('option')
             newCountry.innerHTML = country.name;
+            newCountry.value = country.alpha3Code;
             document.getElementById('coutryDropDown').appendChild(newCountry);
         });
     }
+
+    $("#countries").change(function() {
+        var selectedCountry = document.getElementById('coutryDropDown');
+        // console.log(selectedCountry.selectedIndex)
+        // console.log(selectedCountry.options[selectedCountry.selectedIndex].text)
+        window.localStorage.setItem('selectedCountryIndex', selectedCountry.selectedIndex);
+    });
 
  });
